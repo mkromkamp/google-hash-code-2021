@@ -19,7 +19,7 @@ namespace HashCode
             foreach (var intersection in solution.Intersections)
             {
                 sb.AppendLine(intersection.Id.ToString());
-                sb.AppendLine(intersection.Schedules.Sum(s => s.GreenDuration).ToString());
+                sb.AppendLine(intersection.Schedules.Distinct().Count().ToString());
                 foreach (var schedule in intersection.Schedules)
                 {
                     sb.AppendLine($"{schedule.StreetName} {schedule.GreenDuration}");
