@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.ComponentModel.Design.Serialization;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,6 +19,7 @@ namespace HashCode
             foreach (var intersection in solution.Intersections)
             {
                 sb.AppendLine(intersection.Id.ToString());
+                sb.AppendLine(intersection.Schedules.Sum(s => s.GreenDuration).ToString());
                 foreach (var schedule in intersection.Schedules)
                 {
                     sb.AppendLine($"{schedule.StreetName} {schedule.GreenDuration}");

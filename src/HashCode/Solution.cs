@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace HashCode
 {
@@ -13,14 +14,49 @@ namespace HashCode
 
         public static Solution Solve(Challenge challenge)
         {
-            challenge.CalculateBestPathTime();
+            var cars = new List<CarPath>();
             
-            
-            var solution = new Solution();
-            solution.Intersections.Add(new Intersection
+            // Remove cars that take longer than total duration
+            foreach (var car in challenge.Paths)
             {
-                Schedules = new List<Schedule> {new Schedule {StreetName = "dave street", GreenDuration = 4}}
-            });
+                if (car.Streets.Sum(s => s.StreetLength) <= challenge.Duration)
+                    cars.Add(car);
+            }
+            
+            // Sort cars based on number of paths to take
+            cars = cars.OrderByDescending(c => c.Streets.Sum(s => s.StreetLength)).ToList();
+
+            var s = 0;
+            var solution = new Solution();
+
+            while (s <= challenge.Duration)
+            {
+                var remainingCars = cars.Where(c => c.Streets.Count() > s).ToList();
+                if (!remainingCars.Any())
+                    break;
+                
+                // Get intersection with most waiting cars
+                var intersection = remainingCars.Select(c => c.Streets[s]).GroupBy(s => s).OrderByDescending(g => g.Key).ToList().First().First();
+                var streets = remainingCars.Where(c => c.Streets[s] == intersection).Select(c => c.Streets[s]);
+
+                solution.Intersections.Add(
+                    new Intersection
+                    {
+                        Id = streets.First().EndIntersection,
+                        Schedules = streets
+                            .GroupBy(s => s.StreetName)
+                            .ToList()
+                            .Select(g => 
+                                new Schedule
+                                {
+                                    StreetName = g.Key, GreenDuration = g.Count()
+                                }).ToList()
+                    }
+                );
+                    
+                s++;
+            }
+            
             return solution;
         }
     }
