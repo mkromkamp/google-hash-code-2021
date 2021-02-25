@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace HashCode
 {
@@ -19,6 +20,12 @@ namespace HashCode
     {
         public int NumberOfStreets { get; set; }
         public List<Street> Streets { get; set; } = new List<Street>();
+
+        public int TotalStreetLength { get; private set; }
+        public void CalculateTotalStreetLength()
+        {
+            TotalStreetLength = Streets.Sum(s => s.StreetLength);
+        }
     }
 
     public class Street
