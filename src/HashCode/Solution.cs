@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace HashCode
 {
-    public class Solution
+    public partial class Solution
     {
         public List<Intersection> Intersections { get; set; } = new List<Intersection>();
 

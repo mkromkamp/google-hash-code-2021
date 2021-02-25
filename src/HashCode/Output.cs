@@ -11,7 +11,7 @@ namespace HashCode
         {
             await using var outputFile = File.Open(fileName, FileMode.OpenOrCreate);
             await using var writer = new StreamWriter(outputFile);
-            
+
             var sb = new StringBuilder().AppendLine(solution.Intersections.Count.ToString());
 
             foreach (var intersection in solution.Intersections)
@@ -27,14 +27,13 @@ namespace HashCode
 
             await writer.FlushAsync();
         }
-        
-        
     }
 
     public class Intersection
     {
         public int Id { get; set; }
-        public List<Schedule> Schedules { get; set; }
+        public List<Schedule> Schedules { get; set; } = new List<Schedule>();
+        public List<Street> Streets { get; set; } = new List<Street>();
     }
 
     public class Schedule
