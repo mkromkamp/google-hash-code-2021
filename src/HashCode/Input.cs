@@ -22,18 +22,20 @@ namespace HashCode
             for (int i = 0; i < challenge.NumberOfStreets; i++)
             {
                 var currentStreet = lines[1 + i].Split(' ').ToList();
-                new Street
+                
+                var street = new Street
                 {
                     StartIntersection = int.Parse(currentStreet[0]),
                     EndIntersection = int.Parse(currentStreet[1]),
                     StreetName = currentStreet[2],
                     StreetLength = int.Parse(currentStreet[3]),
-                    
-                }
+                };
+                
+                challenge.Streets.Add(street);
             }
-            
 
-            return new Challenge();
+
+            return challenge;
         }
     }
 }
