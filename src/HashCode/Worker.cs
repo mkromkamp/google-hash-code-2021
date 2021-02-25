@@ -27,7 +27,7 @@ namespace HashCode
                 var challenge = Input.Parse(Path.Combine("input", $"problem{i}.txt"));
                 
                 _logger.LogInformation($"Solving problem {i}");
-                var solution = Solution.MartinSolve(challenge);
+                var solution = Solution.JamesSolve(challenge);
                 _logger.LogInformation($"Solved problem {i}");
                 
                 _logger.LogInformation($"Writing problem {i}");
