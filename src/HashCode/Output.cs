@@ -1,20 +1,45 @@
+using System.Collections.Generic;
 using System.IO;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace HashCode
 {
     public static class Output
     {
-        public static void Write(Solution solution, string fileName)
+        public static async Task WriteAsync(Solution solution, string fileName)
         {
-            using (var outputFile = File.Open(fileName, FileMode.OpenOrCreate))
-            {
-                using (var writer = new StreamWriter(outputFile))
-                {
-                    writer.WriteLine("TODO");
+            await using var outputFile = File.Open(fileName, FileMode.OpenOrCreate);
+            await using var writer = new StreamWriter(outputFile);
+            
+            var sb = new StringBuilder().Append(solution.Intersections.Count);
 
-                    writer.Flush();
+            foreach (var intersection in solution.Intersections)
+            {
+                sb.AppendLine(intersection.Id.ToString());
+                foreach (var schedule in intersection.Schdules)
+                {
+                    sb.AppendLine($"{schedule.StreetName} {schedule.GreenDuration}");
                 }
             }
+
+            await writer.WriteLineAsync(sb.ToString());
+
+            await writer.FlushAsync();
         }
+        
+        
+    }
+
+    public class Intersection
+    {
+        public int Id { get; set; }
+        public List<Schedule> Schdules { get; set; }
+    }
+
+    public class Schedule
+    {
+        public string StreetName { get; set; }
+        public string GreenDuration { get; set; }
     }
 }

@@ -21,13 +21,13 @@ namespace HashCode
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             _logger.LogInformation("HashCode 2021!");
-            
+
             for (var i = 1; i <= 6; i++)
             {
                 var challenge = Input.Parse(Path.Combine("input", $"problem{i}.txt"));
                 var solution = Solution.Solve(challenge);
-                Output.Write(solution, $"output/problem{i}.txt");
-                
+                await Output.WriteAsync(solution, $"output/problem{i}.txt");
+
                 Console.WriteLine($"Input {i}: {solution.GetScore()} points");
             }
         }
