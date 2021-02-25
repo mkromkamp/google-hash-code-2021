@@ -6,18 +6,25 @@ namespace HashCode
 {
     public partial class Solution
     {
+        /// <summary>
+        /// Dont like this way anymore
+        /// </summary>
+        /// <param name="challenge"></param>
+        /// <returns></returns>
         public static Solution JamesSolve(Challenge challenge)
         {
+            Console.WriteLine("starting solution");
             var solution = new Solution();
 
-            var intersections = FindAllIntersections(challenge);
-
-            foreach (var intersection in intersections)
+            var intersectionsLeft = FindAllIntersections(challenge);
+            Console.WriteLine("found intersections");
+            foreach (var intersection in intersectionsLeft)
             {
-                SetRandomOnIntersection(intersection, 5, challenge.Duration);
+                SetRandomOnIntersection(intersection, challenge.Duration);
             }
 
-            solution.Intersections = intersections;
+            solution.Intersections.AddRange(intersectionsLeft);
+            Console.WriteLine("easy intersections done");
             return solution;
         }
 
@@ -42,21 +49,52 @@ namespace HashCode
             return results.Values.ToList();
         }
 
-        private static void SetRandomOnIntersection(Intersection intersection, int time, int totalTime)
+        private static void SetRandomOnIntersection(Intersection intersection, int totalTime)
         {
+            if (!intersection.Streets.Any())
+            {
+                return;
+            }
+
+            if (intersection.Streets.Count == 1)
+            {
+                intersection.Schedules.Add(new Schedule
+                {
+                    StreetName = intersection.Streets.First().StreetName,
+                    GreenDuration = totalTime
+                });
+                
+                return;
+            }
+
             var runningTotal = 0;
             var ran = new Random();
+            var index = ran.Next(intersection.Streets.Count);
+            var time = (int)Math.Ceiling((decimal) totalTime / intersection.Streets.Count);
             while (runningTotal < totalTime)
             {
                 var remainingTime = GetRemainingTime(runningTotal, time, totalTime);
-                var nextStreetIndex = ran.Next(intersection.Streets.Count);
+                
                 intersection.Schedules.Add(new Schedule
                 {
-                    StreetName = intersection.Streets[nextStreetIndex].StreetName,
+                    StreetName = intersection.Streets[index].StreetName,
                     GreenDuration = remainingTime
                 });
+
+                index = GetNextIndex(index, intersection.Streets);
                 runningTotal += remainingTime;
             }
+        }
+
+        private static int GetNextIndex(int index, List<Street> intersectionStreets)
+        {
+            var nextIndex = index + 1;
+            if (nextIndex == intersectionStreets.Count)
+            {
+                return 0;
+            }
+
+            return nextIndex;
         }
 
         private static int GetRemainingTime(int runningTotal, int time, int totalTime)

@@ -22,12 +22,12 @@ namespace HashCode
         {
             _logger.LogInformation("HashCode 2021!");
 
-            for (var i = 1; i <= 1; i++)
+            for (var i = 5; i <= 6; i++)
             {
                 var challenge = Input.Parse(Path.Combine("input", $"problem{i}.txt"));
-                
+
                 _logger.LogInformation($"Solving problem {i}");
-                var solution = Solution.MartinSolve(challenge);
+                var solution = Solution.JamesSolve(challenge);
                 _logger.LogInformation($"Solved problem {i}");
                 
                 _logger.LogInformation($"Writing problem {i}");
