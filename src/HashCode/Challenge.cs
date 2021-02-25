@@ -18,7 +18,7 @@ namespace HashCode
     public class CarPath
     {
         public int NumberOfStreets { get; set; }
-        public List<string> StreetNames { get; } = new List<string>();
+        public List<Street> Streets { get; } = new List<Street>();
     }
 
     public class Street

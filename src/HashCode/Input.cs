@@ -44,7 +44,7 @@ namespace HashCode
 
                 for (int j = 0; j < carPath.NumberOfStreets; j++)
                 {
-                    carPath.StreetNames.Add(currentPath[j + 1]);
+                    //carPath.Streets.Add(currentPath[j + 1]);
                 }
 
                 challenge.Paths.Add(carPath);
