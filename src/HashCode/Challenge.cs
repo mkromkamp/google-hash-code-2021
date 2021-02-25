@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 
 namespace HashCode
 {
@@ -14,29 +13,12 @@ namespace HashCode
         public List<Street> Streets { get; } = new List<Street>();
         
         public List<CarPath> Paths { get;  } = new List<CarPath>();
-
-        public Challenge CalculateBestPathTime()
-        {
-            foreach (var carPath in Paths)
-            {
-                carPath.CalculateBestTotalTime();
-            }
-            
-            return this;
-        }
     }
 
     public class CarPath
     {
         public int NumberOfStreets { get; set; }
         public List<Street> Streets { get; set; } = new List<Street>();
-        
-        public int BestTotalTime { get; private set; }
-
-        public void CalculateBestTotalTime()
-        {
-            BestTotalTime = Streets.Sum(x => x.StreetLength);
-        }
     }
 
     public class Street
