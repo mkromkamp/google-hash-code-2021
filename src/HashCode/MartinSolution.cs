@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 
 namespace HashCode
 {
@@ -21,33 +23,42 @@ namespace HashCode
 
             var s = 0;
             var solution = new Solution();
+            var seen = new HashSet<int>();
 
             while (s <= challenge.Duration)
             {
-                var remainingCars = cars.Where(c => c.Streets.Count() > s).ToList();
+                var remainingCars = cars.Where(c => c.Streets.Count > s).ToList();
                 if (!remainingCars.Any())
                     break;
 
                 // Get intersection with most waiting cars
-                var intersection = remainingCars.Select(c => c.Streets[s]).GroupBy(s => s).OrderByDescending(g => g.Key)
+                var intersection = remainingCars.Select(c => c.Streets[s]).GroupBy(s => s.StreetName)
+                    .OrderByDescending(g => g.Count())
                     .ToList().First().First();
-                var streets = remainingCars.Where(c => c.Streets[s] == intersection).Select(c => c.Streets[s]);
 
-                solution.Intersections.Add(
-                    new Intersection
-                    {
-                        Id = streets.First().EndIntersection,
-                        Schedules = streets
-                            .GroupBy(s => s.StreetName)
-                            .ToList()
-                            .Select(g =>
-                                new Schedule
-                                {
-                                    StreetName = g.Key, GreenDuration = g.Count()
-                                }).ToList()
-                    }
-                );
+                var streets = remainingCars.Where(c => c.Streets[s].EndIntersection == intersection.EndIntersection)
+                    .Select(c => c.Streets[s]).ToList();
 
+                if (!seen.Contains(intersection.EndIntersection))
+                {
+                    solution.Intersections.Add(
+                        new Intersection
+                        {
+                            Id = intersection.EndIntersection,
+                            Schedules = streets
+                                .GroupBy(s => s.StreetName)
+                                .ToList()
+                                .Select(g =>
+                                    new Schedule
+                                    {
+                                        StreetName = g.Key, GreenDuration = g.Count()
+                                    }).ToList()
+                        }
+                    );
+                    
+                    seen.Add(intersection.EndIntersection);
+                }
+                
                 s++;
             }
 
