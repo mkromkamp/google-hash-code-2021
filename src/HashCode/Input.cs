@@ -22,7 +22,7 @@ namespace HashCode
             for (int i = 0; i < challenge.NumberOfStreets; i++)
             {
                 var currentStreet = lines[1 + i].Split(' ').ToList();
-                
+
                 var street = new Street
                 {
                     StartIntersection = int.Parse(currentStreet[0]),
@@ -30,10 +30,25 @@ namespace HashCode
                     StreetName = currentStreet[2],
                     StreetLength = int.Parse(currentStreet[3]),
                 };
-                
+
                 challenge.Streets.Add(street);
             }
 
+            for (int i = 0; i < challenge.NumberOfCars; i++)
+            {
+                var currentPath = lines[1 + challenge.NumberOfStreets + i].Split(' ').ToList();
+                var carPath = new CarPath
+                {
+                    NumberOfStreets = int.Parse(currentPath[0])
+                };
+
+                for (int j = 0; j < carPath.NumberOfStreets; j++)
+                {
+                    carPath.StreetNames.Add(currentPath[j + 1]);
+                }
+
+                challenge.Paths.Add(carPath);
+            }
 
             return challenge;
         }
