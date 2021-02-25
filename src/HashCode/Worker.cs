@@ -22,5 +22,4 @@ namespace HashCode
             _logger.LogInformation("HashCode 2021!");
         }
     }
-    
 }
