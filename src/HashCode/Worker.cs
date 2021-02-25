@@ -25,8 +25,14 @@ namespace HashCode
             for (var i = 1; i <= 1; i++)
             {
                 var challenge = Input.Parse(Path.Combine("input", $"problem{i}.txt"));
-                var solution = Solution.Solve(challenge);
+                
+                _logger.LogInformation($"Solving problem {i}");
+                var solution = Solution.MartinSolve(challenge);
+                _logger.LogInformation($"Solved problem {i}");
+                
+                _logger.LogInformation($"Writing problem {i}");
                 await Output.WriteAsync(solution, $"output/problem{i}.txt");
+                _logger.LogInformation($"Wrote problem {i}");
 
                 Console.WriteLine($"Input {i}: {solution.GetScore()} points");
             }
