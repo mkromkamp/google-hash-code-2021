@@ -4,6 +4,7 @@
 
 # solution zip
 solution.zip
+output/*.out
 
 ### Csharp ###
 ## Ignore Visual Studio temporary files, build results, and

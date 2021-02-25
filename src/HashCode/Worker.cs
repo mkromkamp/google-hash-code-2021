@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,6 +21,15 @@ namespace HashCode
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             _logger.LogInformation("HashCode 2021!");
+            
+            for (var i = 1; i <= 1; i++)
+            {
+                var challenge = Input.Parse(Path.Combine("input", $"sample{i}.in"));
+                var solution = Solution.Solve(challenge);
+                Output.Write(solution, $"output/sample{i}.out");
+                
+                Console.WriteLine($"Input {i}: {solution.GetScore()} points");
+            }
         }
     }
 }
