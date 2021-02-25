@@ -11,6 +11,11 @@ namespace HashCode
     {
         public static async Task WriteAsync(Solution solution, string fileName)
         {
+            if (File.Exists(fileName))
+            { 
+                File.Delete(fileName);
+            }
+
             await using var outputFile = File.Open(fileName, FileMode.OpenOrCreate);
             await using var writer = new StreamWriter(outputFile);
 
