@@ -13,6 +13,9 @@ namespace HashCode
 
         public static Solution Solve(Challenge challenge)
         {
+            challenge.CalculateBestPathTime();
+            
+            
             var solution = new Solution();
             solution.Intersections.Add(new Intersection
             {
