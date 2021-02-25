@@ -68,8 +68,9 @@ namespace HashCode
 
             solution.Intersections.Add(new Intersection
             {
-                Schedules = new List<Schedule> {new Schedule {StreetName = "dave street", GreenDuration = 4}}
+                Schedules = new List<Schedule>(schedulesArray)
             });
+            
             return solution;
         }
     }
