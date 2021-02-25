@@ -14,13 +14,14 @@ TBD :)
 
 | Problem | Score |
 |---|---|
-| A | 0 |
-| B | 0 |
-| C | 0 |
+| A | 1,002 |
+| B | 609,513 |
+| C | 57,485 |
 | D | 0 |
-| E | 0 |
+| E | 368,046 |
+| F | 27,769 |
 
-Total: 0 points
+Total: 1,063,815 points
 
 ## Submitting the solution
 
