@@ -39,13 +39,9 @@ namespace HashCode
                 var currentPath = lines[1 + challenge.NumberOfStreets + i].Split(' ').ToList();
                 var carPath = new CarPath
                 {
-                    NumberOfStreets = int.Parse(currentPath[0])
+                    NumberOfStreets = int.Parse(currentPath[0]),
+                    Streets = currentPath.Skip(1).Select(x => challenge.Streets.First(y => y.StreetName.Equals(x))).ToList()
                 };
-
-                for (int j = 0; j < carPath.NumberOfStreets; j++)
-                {
-                    //carPath.Streets.Add(currentPath[j + 1]);
-                }
 
                 challenge.Paths.Add(carPath);
             }
