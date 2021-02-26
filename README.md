@@ -8,7 +8,8 @@ Team Harmonia is in prod!
 
 ## Scoreboard
 
-TBD :)
+- 6,090th overall
+- 221th in the UK
 
 ### Score
 
